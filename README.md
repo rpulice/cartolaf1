@@ -2,7 +2,7 @@
 
 ### CSZIM-APP ###
 
-* Projeto Rails para apoio aos campeonatos de CS
+* Projeto Rails para apoio aos campeonatos de Cartola F1
 * 1.0-alpha
 
 ### Como instalar e rodar? ###
@@ -38,4 +38,4 @@
 
     git pull upstream master
 
-### 4. Ao terminar as modificaçes, abra um pull request para incorporar o seu código no repositório principal.
+### 4. Ao terminar as modificações, abra um pull request para incorporar o seu código no repositório principal.
