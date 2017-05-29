@@ -1,0 +1,19 @@
+<div class="columns">
+  <div class="column has-text-centered">
+    <h1 class="title">CartolaF1</h1>
+    <div class="columns is-multiline">
+	  <% liga = ActiveSupport::JSON.decode(@liga)['liga'] %>
+	    <div class="column">
+	      <div class="contact-box center-version">
+	        <span>
+	          <%= image_tag liga['url_flamula_svg'], class: 'img-circle' %>
+	          <div><%= liga['descricao'] %></div>
+	          <div><strong>Participantes:</strong> <%= liga['total_times_liga'] %></div>
+	        </span>
+	      </div>
+	    </div>
+	</div>
+  </div>
+</div>
+
+

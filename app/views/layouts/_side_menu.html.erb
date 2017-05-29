@@ -1,0 +1,16 @@
+<aside class="menu">
+  <ul class="menu-list">
+    <li>
+      <%= link_to root_path, class: "#{'is-active' if params[:controller] == 'dashboard'}" do %>
+        <span class="icon is-small"><i class="fa fa-dashboard"></i></span>&nbsp;
+        Painel
+      <% end %>
+    </li>
+    <li>
+      <%= link_to users_path, class: "#{'is-active' if params[:controller] == 'users'}" do %>
+        <span class="icon is-small"><i class="fa fa-user"></i></span>&nbsp;
+        Usuários/Jogadores
+      <% end %>
+    </li>
+  </ul>
+</aside>

@@ -1,0 +1,19 @@
+<div class="columns is-multiline">
+  <% @users.each do |user| %>
+    <div class="column is-one-third">
+      <div class="contact-box center-version">
+        <span>
+          <%= image_tag avatar_url(user), class: 'img-circle' %>
+          <h3><strong><%= user.nome %></strong></h3>
+          <div><%= user.email %></div>
+          <div><%= user.login %></div>
+        </span>
+        <div class="contact-box-footer">
+          <% if user.id == current_user.id || current_user.admin %>
+            <%= link_to "Editar", edit_user_path(user), :class => 'button' %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
