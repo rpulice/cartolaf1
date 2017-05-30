@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 20170530210204) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "alyssons", force: :cascade do |t|
     t.text     "pontos"
     t.datetime "created_at", null: false
@@ -23,7 +26,7 @@ ActiveRecord::Schema.define(version: 20170530210204) do
     t.text     "player"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["team_id"], name: "index_team_players_on_team_id"
+    t.index ["team_id"], name: "index_team_players_on_team_id", using: :btree
   end
 
   create_table "teams", force: :cascade do |t|
