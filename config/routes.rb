@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   get 'logout' => 'sessions#destroy'
   delete 'logout' => 'sessions#destroy'
   get 'error' => 'dashboard#error'
+  get 'error_parcial' => 'dashboard#error_parcial'
 
   resources :users
   resources :teams do
