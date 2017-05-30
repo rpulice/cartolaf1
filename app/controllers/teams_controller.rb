@@ -23,6 +23,7 @@ class TeamsController < ApplicationController
       flash[:success] = 'Time atualizado com sucesso!'
       redirect_to teams_url
     else
+      @liga = liga
       render 'edit'
     end
   end
@@ -39,6 +40,7 @@ class TeamsController < ApplicationController
       flash[:success] = 'Time criado com sucesso!'
       redirect_to teams_url
     else
+      @liga = liga
       render 'new'
     end
   end
