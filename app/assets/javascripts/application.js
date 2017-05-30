@@ -16,8 +16,9 @@
 //= require cocoon
 //= require highcharts/highcharts
 //= require highcharts/highcharts-more
+//= require bulma
+//= require toastr
 //= require tablesorter.min
-//= require_tree .
 
 Flatpickr.localize(Flatpickr.l10ns.pt);
 Flatpickr.defaultConfig.altInput = true;
