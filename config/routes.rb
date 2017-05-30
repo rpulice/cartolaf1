@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   post 'login' => 'sessions#create'
   get 'logout' => 'sessions#destroy'
   delete 'logout' => 'sessions#destroy'
+  get 'error' => 'dashboard#error'
 
   resources :users
   resources :teams do
@@ -16,5 +17,6 @@ Rails.application.routes.draw do
   resources :sessions
   resources :parcials
   resources :alyssons
+  resources :points
 
 end

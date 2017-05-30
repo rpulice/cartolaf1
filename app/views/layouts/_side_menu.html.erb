@@ -19,6 +19,12 @@
       <% end %>
     </li>
     <li>
+      <%= link_to points_path, class: "#{'is-active' if params[:controller] == 'points'}" do %>
+        <span class="icon is-small"><i class="fa fa-flag-checkered"></i></span>&nbsp;
+        Pontuação Normal
+      <% end %>
+    </li>
+    <li>
       <%= link_to parcials_path, class: "#{'is-active' if params[:controller] == 'parcials'}" do %>
         <span class="icon is-small"><i class="fa fa-refresh"></i></span>&nbsp;
         Parcial

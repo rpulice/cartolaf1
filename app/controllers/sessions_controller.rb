@@ -31,4 +31,8 @@ class SessionsController < ApplicationController
     redirect_to root_url
   end
 
+  def error
+    flash.now[:error] = 'Mercado fechado, não é possível fazer nada!'
+    redirect_to error_path
+  end
 end
