@@ -32,7 +32,7 @@
 		  			<% end  %>
 		  			</td>
 	  				<% (status['rodada_atual']-1).times do |i| %>
-	  					<% alysson = eval(Alysson.first.pontos) %>
+	  					<% alysson = Alysson.first.pontos %>
 		  				<% alysson[i].each do |pf1| %>	  					
 	  						<% if pf1[0] === v.id %>
 	  							<td>
