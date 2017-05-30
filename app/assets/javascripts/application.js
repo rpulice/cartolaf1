@@ -16,6 +16,7 @@
 //= require cocoon
 //= require highcharts/highcharts
 //= require highcharts/highcharts-more
+//= require tablesorter.min
 //= require_tree .
 
 Flatpickr.localize(Flatpickr.l10ns.pt);
