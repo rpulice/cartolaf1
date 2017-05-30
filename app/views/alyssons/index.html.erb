@@ -1,0 +1,30 @@
+<div class="columns">
+  <div class="column has-text-centered">
+    <h1 class="title">Pontuação F1</h1>
+    <br>
+	  <div class="columns is-multiline">
+	  	<table class="table" id="tabela">
+	  		<thead>
+	  			<tr>
+	  				<th>Time</th>
+	  				<th>Jogadores</th>
+	  				<th>Pontos</th>
+	  			</tr>
+	  		</thead>
+	  		<tbody>
+		  	<% @teams.each do |v| %>
+		  		<tr>
+		  			<td><%= v.nome %></td>
+		  			<td>
+		  			<% TeamPlayer.where(team_id: v.id).each do |j|  %>
+		  				<%= j.player %><br>
+		  			<% end  %>
+		  			</td>
+		  			<td>EM BREVE</td>
+		  		</tr>
+		   <% end %>
+		   </tbody>
+		  </table>
+		</div>
+  </div>
+</div>

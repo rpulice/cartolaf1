@@ -1,18 +1,62 @@
+<% status = ActiveSupport::JSON.decode(@status) %>
+<% liga = ActiveSupport::JSON.decode(@liga) %>
 <div class="columns">
   <div class="column has-text-centered">
-    <h1 class="title">CartolaF1</h1>
+    <h1 class="title">Espetaculosos</h1>
+    <h2>Rodada <%= status['rodada_atual'] %></h2>
     <div class="columns is-multiline">
-	  <% liga = ActiveSupport::JSON.decode(@liga)['liga'] %>
 	    <div class="column">
 	      <div class="contact-box center-version">
 	        <span>
-	          <%= image_tag liga['url_flamula_svg'], class: 'img-circle' %>
-	          <div><%= liga['descricao'] %></div>
-	          <div><strong>Participantes:</strong> <%= liga['total_times_liga'] %></div>
+	          <%= image_tag(liga['liga']['url_flamula_svg'], class: 'img-circle', size: "128x128") %><br>
+	          <strong>Participantes:</strong> <%= liga['liga']['total_times_liga'] %><br>
+	          <%= liga['liga']['descricao'] %>.
 	        </span>
 	      </div>
 	    </div>
 	</div>
+	<div class="columns is-multiline">
+		<div class="column">
+  		<%= high_chart("geral", Chart.chart_geral(liga)) %>
+  	</div>
+  	<div class="column">
+  		<%= high_chart("rodada", Chart.chart_rodada(liga)) %>
+  	</div>
+  </div>
+  <div class="columns is-multiline">
+  	<% liga['times'].each do |time| %>
+  	<div class="card column is-one-quarter">
+	  <div class="card-image">
+	    <figure class="image is-128x128">
+	      <%= image_tag time['url_escudo_svg'] %>
+	    </figure>
+	  </div>
+	  <div class="card-content">
+	    <div class="media">
+	      <div class="media-left">
+	        <figure class="image is-48x48">
+	          <%= image_tag time['foto_perfil'], class: 'img-circle' %>
+	        </figure>
+	      </div>
+	      <div class="media-content">
+	        <p class="title is-4"><%= time['nome_cartola'] %></p>
+	        <p class="subtitle is-6"><%= time['nome'] %></p>
+	      </div>
+	    </div>
+	    <div>
+	      <i class="fa fa-dollar"></i> <%= time['patrimonio'].round(2) %>
+          <ul class="content" align="left">
+	          <li><strong>Pontos Rodada:</strong> <%= time['pontos']['rodada'].round(2) %></li>
+	          <li><strong>Pontos Mês:</strong> <%= time['pontos']['mes'].round(2) %></li>
+	          <li><strong>Pontos Turno:</strong> <%= time['pontos']['turno'].round(2) %></li>
+	          <li><strong>Pontos Campeonato:</strong> <%= time['pontos']['campeonato'].round(2) %></li>
+          </ul>
+	    </div>
+	  </div>
+		</div>
+   <% end %>
+	</div>
+
   </div>
 </div>
 

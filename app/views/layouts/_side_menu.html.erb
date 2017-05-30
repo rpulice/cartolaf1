@@ -7,6 +7,24 @@
       <% end %>
     </li>
     <li>
+      <%= link_to teams_path, class: "#{'is-active' if params[:controller] == 'teams'}" do %>
+        <span class="icon is-small"><i class="fa fa-trophy"></i></span>&nbsp;
+        Times F1
+      <% end %>
+    </li>
+    <li>
+      <%= link_to alyssons_path, class: "#{'is-active' if params[:controller] == 'alyssons'}" do %>
+        <span class="icon is-small"><i class="fa fa-flag-checkered"></i></span>&nbsp;
+        Pontuação F1
+      <% end %>
+    </li>
+    <li>
+      <%= link_to parcials_path, class: "#{'is-active' if params[:controller] == 'parcials'}" do %>
+        <span class="icon is-small"><i class="fa fa-refresh"></i></span>&nbsp;
+        Parcial
+      <% end %>
+    </li>
+    <li>
       <%= link_to users_path, class: "#{'is-active' if params[:controller] == 'users'}" do %>
         <span class="icon is-small"><i class="fa fa-user"></i></span>&nbsp;
         Usuários/Jogadores

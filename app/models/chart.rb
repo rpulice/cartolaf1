@@ -1,58 +1,80 @@
 class Chart
-  def self.chart(data)
+  def self.chart_geral(data)
     nome = []
-    kill = []
-    death = []
-    pie_kill = []
-    pie_death = []
-    data.each do |statistic|
-      user = User.find(statistic.user_id)
-      ratio = statistic.ratio
-      media = (statistic.kills.to_f+statistic.deaths.to_f)/2
-      nome << user.nome + '<br>' + ratio.to_s
-      kill << statistic.kills
-      death << statistic.deaths
-      pie_kill << {name: user.nome.to_s, y: statistic.kills}
-      pie_death << {name: user.nome.to_s, y: statistic.deaths}
+    time = []
+    rodada = []
+    pie_rodada = []
+    media = 0
+    i = 0
+    data['times'].each do |statistic|
+      nome << statistic['nome']
+      time << statistic['nome_cartola']
+      rodada << statistic['pontos']['campeonato'].round(2)
+      pie_rodada << {name: statistic['nome'].to_s, y: statistic['pontos']['campeonato'].round(2)}
+      media += statistic['pontos']['campeonato'].round(2)
+      i += 1
     end
-    line_kill = (data.map {|k| k['kills']}.reduce(0, :+))/data.size
-    line_death = (data.map {|d| d['deaths']}.reduce(0, :+))/data.size
+    line_rodada = media/i
     LazyHighCharts::HighChart.new('graph') do |f|
-      f.title(text: "Kikiu")
+      f.title(text: "Campeonato")
       f.xAxis(categories: nome)
-      f.labels(items: [{html: 'Kills', style: {left: '180px', top: '2px', color: 'black'}},{html: 'Deaths', style: {left: '380px', top: '2px', color: 'black'}}])
-      f.series(type: 'column', name: "Kills", data: kill, color: '#23d160')
-      f.series(type: 'column', name: "Deaths", data: death, color: '#ff3860')
-      f.series(type: 'pie', name: 'Kill', data: pie_kill, center: [250, 20], size: 100, showInLegend: false, dataLabels: {enabled: false,},
+      f.series(type: 'column', name: "Jogador", data: rodada)
+      f.series(type: 'pie', name: 'Pontos', data: pie_rodada, center: [250, 20], size: 100, showInLegend: false, dataLabels: {enabled: false},
           tooltip: {pointFormat: '{series.name}: {point.y} - <b>{point.percentage:.1f}%</b>'})
-      f.series(type: 'pie', name: 'Death', data: pie_death, center: [450, 20], size: 100, showInLegend: false, dataLabels: {enabled: false},
+      f.yAxis [{title: [{text: 'Pontos'}], plotLines: [{color: '#ff3860', value: line_rodada, width: 2}]}]
+      f.plotOptions(column: {colorByPoint: true})
+      f.legend(align: 'right', verticalAlign: 'top', y: 0, x: -50, layout: 'vertical')
+    end
+  end
+
+  def self.chart_rodada(data)
+    nome = []
+    rodada = []
+    pie_rodada = []
+    media = 0
+    i = 0
+    data['times'].each do |statistic|
+      nome << statistic['nome']
+      rodada << statistic['pontos']['rodada'].round(2)
+      pie_rodada << {name: statistic['nome'].to_s, y: statistic['pontos']['rodada'].round(2)}
+      media += statistic['pontos']['rodada'].round(2)
+      i += 1
+    end
+    line_rodada = media/i
+    LazyHighCharts::HighChart.new('graph') do |f|
+      f.title(text: "Última rodada")
+      f.xAxis(categories: nome)
+      f.series(type: 'column', name: "Jogador", data: rodada, color: '#23d160')
+      f.series(type: 'pie', name: '%', data: pie_rodada, center: [250, 20], size: 100, showInLegend: false, dataLabels: {enabled: false},
           tooltip: {pointFormat: '{series.name}: {point.y} - <b>{point.percentage:.1f}%</b>'})
-      f.yAxis [
-        {plotLines: [{color: '#ff3860', value: line_death, width: 2},
-                    {color: '#23d160', value: line_kill, width: 2}]}
-      ]
+      f.yAxis [{title: [{text: 'Pontos'}], plotLines: [{color: '#ff3860', value: line_rodada, width: 2}]}]
+      f.plotOptions(column: {colorByPoint: true})
       f.legend(align: 'right', verticalAlign: 'top', y: 75, x: -50, layout: 'vertical')
     end
   end
 
-  def self.chart_map()
-    mapa = []
-    terror = []
-    ct = []
-    Map.all.each do |statistic|
-      total_ct = Map.joins(rounds: :winner).where(["maps.id = ? AND winners.lado = 'ct'", statistic.id]).count
-      total_terror = Map.joins(rounds: :winner).where(["maps.id = ? AND winners.lado = 't'", statistic.id]).count
-      if total_ct > 0 || total_terror > 0
-        mapa << Map.find(statistic.id).nome
-        ct << total_ct
-        terror << total_terror
-      end
+  def self.chart_parcial(data)
+    nome = []
+    rodada = []
+    pie_rodada = []
+    media = 0
+    i = 0
+    data.each do |k, v|
+      nome << k
+      rodada << v.round(2)
+      pie_rodada << {name: k.to_s, y: v.round(2)}
+      media += v.round(2)
+      i += 1
     end
+    line_rodada = media/i
     LazyHighCharts::HighChart.new('graph') do |f|
-      f.title(text: "Kikiu")
-      f.xAxis(categories: mapa)
-      f.series(type: 'column', name: "CT", data: ct, color: '#23d160')
-      f.series(type: 'column', name: "Terror", data: terror, color: '#ff3860')
+      f.title(text: "Parcial")
+      f.xAxis(categories: nome)
+      f.series(type: 'column', name: "Jogador", data: rodada, color: '#23d160')
+      f.series(type: 'pie', name: '%', data: pie_rodada, center: [250, 20], size: 100, showInLegend: false, dataLabels: {enabled: false},
+          tooltip: {pointFormat: '{series.name}: {point.y} - <b>{point.percentage:.1f}%</b>'})
+      f.yAxis [{title: [{text: 'Pontos'}], plotLines: [{color: '#ff3860', value: line_rodada, width: 2}]}]
+      f.plotOptions(column: {colorByPoint: true})
       f.legend(align: 'right', verticalAlign: 'top', y: 75, x: -50, layout: 'vertical')
     end
   end

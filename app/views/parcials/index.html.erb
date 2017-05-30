@@ -1,0 +1,48 @@
+<% status = ActiveSupport::JSON.decode(@status) %>
+<% liga = ActiveSupport::JSON.decode(@liga) %>
+<div class="columns">
+  <div class="column has-text-centered">
+    <h1 class="title">Parciais</h1>
+    <h2>Rodada <%= status['rodada_atual'] %></h2>
+    <br>
+	  <div class="columns is-multiline">
+	  	<table class="table" id="tabela">
+	  		<thead>
+	  			<tr>
+	  				<th>Jogador</th>
+	  				<th>Time</th>
+	  				<th>Pontos</th>
+	  			</tr>
+	  		</thead>
+	  		<tbody>
+	  		<% parcial_time = [] %>
+		  	<% liga['times'].each do |time| %>
+		  		<%
+	  			total_parcial = 0.0
+		  		url = "https://api.cartolafc.globo.com/time/slug/#{time['slug']}/#{status['rodada_atual']}"
+	  			client = HTTPClient.new
+					parcial = client.get_content(url)
+					parcial = ActiveSupport::JSON.decode(parcial)
+					parcial_geral = client.get_content('https://api.cartolafc.globo.com/atletas/pontuados')
+					parcial_geral = ActiveSupport::JSON.decode(parcial_geral)
+					parcial['atletas'].each do |pr|
+						atleta_id = pr['atleta_id'].to_s
+						total_parcial += parcial_geral['atletas'][atleta_id]['pontuacao'].to_f if parcial_geral['atletas'][atleta_id].present?
+					end
+					parcial_time << [time['nome'], total_parcial]
+		  		%>
+		  		<tr>
+		  			<td><%= image_tag(time['foto_perfil'], size:'48x48', class: 'img-circle') %><br><%= time['nome_cartola'] %></td>
+		  			<td><%= image_tag(time['url_escudo_svg'], size:'48x48') %><br><%= time['nome'] %></td>
+		  			<td><%= total_parcial.round(2) %></td>
+		  		</tr>
+		   <% end %>
+		   </tbody>
+		  </table>
+		</div>
+  </div>
+</div>
+<%= high_chart("parcial", Chart.chart_parcial(parcial_time)) %>
+<script type="text/javascript">
+$("#tabela").tablesorter();   
+</script>

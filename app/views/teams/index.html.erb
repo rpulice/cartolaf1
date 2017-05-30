@@ -1,0 +1,32 @@
+<div class="container">
+  <div class="columns">
+    <div class="column is-2">
+      <%= link_to new_team_path, :class => 'button is-primary' do %>
+        <i class="fa fa-plus"></i>&nbsp;
+        Time
+      <% end %>
+    </div>
+  </div>
+  <hr>
+  <table class="table is-narrow is-striped is-bordered">
+    <thead>
+      <th>Nome</th>
+      <th>Operações</th>
+    </thead>
+    <tbody>
+      <% @teams.each do |team| %>
+      <tr>
+        <td><%= team.nome %></td>
+        <td>
+          <%= link_to "Editar", edit_team_path(team), :class => 'button' %>
+          <% if team.ativo %>
+            <%= link_to "Inativar", toggle_status_team_path(team), :method => :post, remote: true, :class => 'button' %>
+          <% else %>
+            <%= link_to "Ativar", toggle_status_team_path(team), :method => :post, remote: true, :class => 'button' %>
+          <% end %>
+        </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

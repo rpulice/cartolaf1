@@ -1,0 +1,2 @@
+class Alysson < ApplicationRecord
+end
