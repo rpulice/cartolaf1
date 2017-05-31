@@ -28,7 +28,51 @@
 	  				<td><%= v.nome %></td>
 	  				<td>
 		  			<% TeamPlayer.where(team_id: v.id).each do |j|  %>
-		  				<%= j.player %><br>
+		  				<%
+		  				case j.player
+		  				when "dubalacobaco-rj"
+		  					icone = "rj.png"
+							when "f-c-trakitana"
+		  					icone = "rs.png"
+							when "comuno-gayzista"
+		  					icone = "pb.png"
+							when "cacetinho-wanderers"
+		  					icone = "rs.png"
+							when "dwfc-diorge-wilstermann"
+		  					icone = "rj.png"
+							when "kenguerover-f-c"
+		  					icone = "sp.png"
+							when "golpisti-calcio"
+		  					icone = "mg.png"
+							when "veronicas-soccer-fc"
+		  					icone = "sp.png"
+							when "a-c-delucca"
+		  					icone = "sp.png"
+							when "atletico-de-mim-ache"
+		  					icone = "pr.png"
+							when "impossibru-f-c"
+		  					icone = "sc.png"
+							when "barsemlona-parnanguara"
+		  					icone = "pr.png"
+							when "pinga-com-mel-united"
+		  					icone = "mg.png"
+							when "dragonzord-fc"
+		  					icone = "go.png"
+							when "clube-destiny"
+		  					icone = "sp.png"
+							when "espetacul0s0"
+		  					icone = "sc.png"
+							when "pereculino"
+		  					icone = "sp.png"
+							when "jehuty"
+		  					icone = "go.png"
+							when "neylindo-da-vila"
+		  					icone = "sp.png"
+							when "salamandra-malandra"
+		  					icone = "sp.png"
+		  				end
+		  				%>
+		  				<%= image_tag(asset_path icone) %>&nbsp;<%= j.player %><br>
 		  			<% end  %>
 		  			</td>
 	  				<% (status['rodada_atual']-1).times do |i| %>
@@ -52,3 +96,8 @@
 <script type="text/javascript">
 $("#tabela").tablesorter();   
 </script>
+<style type="text/css">
+ img {
+  width: 20px;
+  height: 20px;
+</style>
