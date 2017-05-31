@@ -1,5 +1,3 @@
-require 'json'
-
 class AlyssonsController < ApplicationController
   before_action :authenticate_user
 
@@ -7,6 +5,6 @@ class AlyssonsController < ApplicationController
 		@teams = Team.all
   	client = HTTPClient.new
 		@status = client.get_content('https://api.cartolafc.globo.com/mercado/status')
-		@alysson = JSON.parse(Alysson.first.pontos)
+		@alysson = eval(Alysson.first.pontos.to_s)
   end
 end
