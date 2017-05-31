@@ -31,8 +31,8 @@
 		  				<%= j.player %><br>
 		  			<% end  %>
 		  			</td>
+	  				<% alysson = ActiveSupport::JSON.decode(Alysson.first.pontos) %>
 	  				<% (status['rodada_atual']-1).times do |i| %>
-	  					<% alysson = ActiveSupport::JSON.decode(Alysson.first.pontos.to_s) %>
 		  				<% alysson[i].each do |pf1| %>	  					
 	  						<% if pf1[0] === v.id %>
 	  							<td>
