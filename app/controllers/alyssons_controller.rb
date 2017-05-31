@@ -5,7 +5,6 @@ class AlyssonsController < ApplicationController
 		@teams = Team.all
   	client = HTTPClient.new
 		@status = client.get_content('https://api.cartolafc.globo.com/mercado/status')
-		alysson = Alysson.first.pontos.to_a
-		@alysson = alysson.to_json
+		@alysson = JSON.parse(Alysson.first.pontos)
   end
 end
