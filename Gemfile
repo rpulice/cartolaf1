@@ -22,6 +22,7 @@ gem 'kaminari'
 gem 'cocoon'
 gem 'lazy_high_charts'
 gem 'httpclient'
+gem 'json', '~> 2.1.0'
 
 group :production do
   gem 'pg'
